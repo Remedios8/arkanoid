@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>PuppyArcanoid</title>
+</head>
+
+<!-- Фон страницы -->
+ <style>
+body {
+background:url(aa.jpg) repeat;
+ background-size: repeat;
+}
+ </style>
+<!-- Меню для запущенной игры -->
+<div id="myNav" class="overlay">
+
+  <!-- Button to close the overlay navigation -->
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+
+  <!-- Overlay content -->
+  <div class="overlay-content">
+    <a href="#"onclick="mena();closeNav();newgame()">{New game}</a>
+    <a href="#"onclick="mena();openNav2()">{Rules}</a> 
+    <a href="#" onclick="mena();closeNav()">{Close menu}</a>
+ 
+  </div>
+</div>
+
+<!-- Меню для входа в игру -->
+<div id="myNav1" class="overlay">
+  <div class="overlay-content">
+    <a href="#"onclick="mena();closeNav1();startGame(menu)">{New game}</a>
+	 <a href="#"onclick="mena();openNav2()">{Rules}</a>
+	 
+  </div>
+</div>
+
+<div id="myNav2" class="overlay">
+  <div class="overlay-content">
+    <a href="#"onclick="mena();closeNav2();">Back</a>
+	{ Use "A"&"D" buttons to move;
+	<br> { Use "W"&"S" buttons to make music louder&quieter;
+	<br> { U need to destroy all of annoying cats to kill the Witch;
+	<br> { Be carefull & dont catch her bombs and poisons;
+	<br> { U can control the speed of the puppy sending it in different directions
+	<br> { If u throw the puppy in the witch you will get 10 points
+  </div>
+</div>
+
+<div id="myNav3" class="overlay">
+  <div class="overlay-content">
+    <a href="#"onclick="mena();setInterval(location.reload(), 50000); ">Back to menu</a>
+	{ YOU LOSE! }
+	<br><img src="lose.gif" >
+	
+  </div>
+</div>
+<div id="myNav4" class="overlay">
+  <div class="overlay-content">
+    <a href="#"onclick="mena();setInterval(location.reload(), 50000); ">Back to menu</a>
+	{ YOU WIN! }
+	<br><img src="win.gif" >
+	
+  </div>
+</div>
+
+
+ 
+ <!-- Канвас + меню -->
+<style type="text/css">
+
+#canvas-container {
+   width: 100%;
+   text-align:center;
+  
+}
+
+canvas {
+   display: inline-block;
+  border: 80px solid rgba(216, 191, 216,0.5);
+
+    -moz-background-clip: border;     
+    -webkit-background-clip: border;  
+    background-clip: border-box;
+
+    -moz-background-clip: padding;     
+    -webkit-background-clip: padding; 
+    background-clip: padding-box;
+
+    -moz-background-clip: content;     
+    -webkit-background-clip: content;  
+    background-clip: content-box;      
+    
+}
+
+
+/* The Overlay (background) */
+.overlay {
+    /* Height & width depends on how you want to reveal the overlay (see JS below) */    
+    height: 100%;
+    width: 0;
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    background-color: rgb(240, 128, 128); /* Black fallback color */
+    background-color: rgba(216, 191, 216,0.93); /* Black w/opacity */
+    overflow-x: hidden; /* Disable horizontal scroll */
+    transition: 0.5s; /* 0.5 second transition effect to slide in or slide down the overlay (height or width, depending on reveal) */
+}
+
+/* Position the content inside the overlay */
+.overlay-content {
+    position: relative;
+    top: 25%; /* 25% from the top */
+    width: 100%; /* 100% width */
+    text-align: center; /* Centered text/links */
+	 font: 20pt Beauty and the Beast;  
+    margin-top: 30px; /* 30px top margin to avoid conflict with the close button on smaller screens */
+}
+
+/* The navigation links inside the overlay */
+.overlay a {
+    padding: 8px;
+    text-decoration: none;
+    font-size: 36px;
+    color:#DB7093;
+    display: block; /* Display block instead of inline */
+    transition: 0.3s; /* Transition effects on hover (color) */
+}
+
+/* When you mouse over the navigation links, change their color */
+.overlay a:hover, .overlay a:focus {
+    color: #f1f1f1;
+}
+
+/* Position the close button (top right corner) */
+.overlay .closebtn {
+    position: absolute;
+    top: 20px;
+    right: 45px;
+    font-size: 60px;
+}
+
+/* When the height of the screen is less than 450 pixels, change the font-size of the links and position the close button again, so they don't overlap */
+@media screen and (max-height: 450px) {
+    .overlay a {font-size: 20px}
+    .overlay .closebtn {
+        font-size: 40px;
+        top: 15px;
+        right: 35px;
+    }
+}
+</style>
+
+
+
+<script type="text/javascript" src="key.js"></script>
+<script type="text/javascript" src="engine.js"></script>
+<script src="graph.js"></script>
+<script type="text/javascript" src="grid.js"></script>
+<script src="ball.js"></script>
+<script src="player.js"></script>
+<script src="witch.js"></script>
+
+<div id="canvas-container">
+<canvas id="canvas" style="z-index:1"width="640" height="480"></canvas>
+
+</div>
+
+<img src="" id="image"/>
+<img src="" id="win"/>
+ 
+ 
+
+ <div class="conteiner"><div id="gun"></div></div>
+<div id="ship"></div>
+ 
+
+<script type="text/javascript">
+
+music("5.mp3");
+backgroundAudio.play();
+
+/* Open when someone clicks on the span element */
+function Save() {writeCookie("myCookie",player.x,ball.x,ball.y, 24);}
+function Open(){alert( readCookie("myCookie") );}
+function openNav() {
+
+    document.getElementById("myNav").style.width = "100%";
+
+}
+
+/* Close when someone clicks on the "x" symbol inside the overlay */
+function closeNav() {
+
+    document.getElementById("myNav").style.width = "0%";
+	
+}
+
+function openNav1() {
+    document.getElementById("myNav1").style.width = "100%";
+}
+
+function closeNav1() {
+    document.getElementById("myNav1").style.width = "0%";
+}
+function openNav2() {
+
+    document.getElementById("myNav2").style.width = "100%";
+}
+
+/* Close when someone clicks on the "x" symbol inside the overlay */
+function closeNav2() {
+
+    document.getElementById("myNav2").style.width = "0%";	
+}
+function openNav3() {
+
+    document.getElementById("myNav3").style.width = "100%";
+
+}
+
+/* Close when someone clicks on the "x" symbol inside the overlay */
+function closeNav3() {
+
+    document.getElementById("myNav3").style.width = "0%";
+	
+}
+function openNav4() {
+
+    document.getElementById("myNav4").style.width = "100%";
+
+}
+
+/* Close when someone clicks on the "x" symbol inside the overlay */
+function closeNav4() {
+
+    document.getElementById("myNav4").style.width = "0%";
+	
+}
+
+function newgame(){
+	music("6.mp3");
+	player.hp=3;
+	player.score=0;
+	grid.clear();
+	ball.clear();		
+	grid.create(map);
+	player.init(width/2,50,'red');
+	ball.init(player.x+Math.ceil(player.width/3),player.y-20,13,'red');  
+	witch.x=1;
+	witch.xball=900;
+}
+
+var map={
+color:'#DB7093',
+width:43,
+height:40,
+offset:5,
+tiles:[
+[0,0,0,1,0,1,0,0,0],
+[0,0,1,1,0,1,1,0,0],
+[0,0,0,0,0,0,0,0,0],
+[0,1,1,1,0,1,1,1,0],
+[1,0,0,1,1,1,0,0,1],
+[0,1,1,0,1,0,1,1,0]
+]
+};
+
+
+init();
+grid.create(map);
+
+//grid.generate(1,60,76);
+player.init(width/2,82,'red');
+ball.init(player.x+Math.ceil(player.width/3),player.y-20,13,'red');
+witch.initball(100,100,10,'mad.gif');
+img.src = 'cats.gif';
+img1.src = 'cat.gif';
+img2.src = 'blood.png';
+witch1.src = 'witch.gif';
+puppy.src = 'pup.gif';
+ddeath.src='ddeath.gif';
+daddy.src='daddy.gif';
+fon.src='fff.jpg';
+
+
+var timePassedw0=6000;
+var startw0 = Date.now();
+mb      = new Image();  
+var mbLoaded = false;
+mb.onload = function(){
+ mbLoaded = true;
+}
+mb.src='mbut.gif'; 
+mu     = new Image();  
+var muLoaded = false;
+mu.onload = function(){
+ muLoaded = true;
+}
+mu.src='mus.gif'; 
+mup     = new Image();
+var mupLoaded = false;
+mup.onload = function(){
+ mupLoaded = true;
+}
+mup.src='mup.gif'; 
+
+var game = function(){ 
+
+fillAll(); 
+backgroundAudio.play();
+mus();
+
+grid.draw(); 
+
+
+
+ball.collision();
+if(ball.y<height){
+ball.move();
+ball.draw();}
+
+player.move(); 
+player.draw(); 
+player.collision(); 
+
+witch.draw();
+witch.move();
+timePassedw0 = Date.now() - startw0;
+if(timePassedw0>=150){
+witch.drawball();
+witch.moveb();
+witch.collision();
+if(witch.yball>=460){
+ start1 = Date.now();
+ witch.initball(witch.x,100,10);
+ 
+}
+
+}
+
+
+var i=1;
+var timePassed1=500;
+var start1=0;
+
+
+//drawRect(600,10,50,50,'white');
+   if (mbLoaded) {   
+ctx.drawImage(mb, 590,5);}
+if(backgroundAudio.volume==0){
+   if (mupLoaded) {   
+ctx.drawImage(mup, 590,50);}}
+else {if (muLoaded) {   
+ctx.drawImage(mu, 590,50);}}
+//}
+ ctx.fillStyle = "white";
+    ctx.strokeStyle = "#F00";
+    ctx.font = "small-caps 30px Dry Brush";
+    ctx.fillText("Score:", 20, 50);
+	ctx.fillText(player.score, 130, 50);
+	ctx.fillText("Hp:", 20, 80);
+	ctx.fillText(player.hp, 130, 80);
+	ctx.fillText("Puppy's speed:", 20, 110);
+	ctx.fillText(Math.ceil(((ball.speedx+ball.speedy)/2* 100))/100, 220, 110);
+	
+if(ball.x>=800){
+ctx.font = "small-caps 20pt Beauty and the Beast";
+    ctx.fillText("}", 155, 80);}
+	
+}; 
+
+var menu=function(){
+
+fillAll(); 
+//grid.draw(); 
+
+ball.draw();
+
+player.draw(); 
+ if (mbLoaded) {   
+ctx.drawImage(mb, 590,5);}
+if(backgroundAudio.volume==0){
+   if (mupLoaded) {   
+ctx.drawImage(mup, 590,50);}}
+else {if (muLoaded) {   
+ctx.drawImage(mu, 590,50);}}
+
+
+ ctx.fillStyle = "white";
+    ctx.strokeStyle = "#F00";
+    ctx.font = "small-caps 30px Dry Brush";
+    ctx.fillText("Score: ", 20, 50);
+	ctx.fillText(player.score, 130, 50);
+	ctx.fillText("Hp:  ", 20, 80);
+	ctx.fillText(player.hp, 130, 80);
+	 ctx.fillStyle = "#32CD32";
+   ctx.fillText("{PRESS ANY KEY TO START}", 150, 270);
+	
+	if (isAnyKeyDown()){
+	backgroundAudio.pause();
+	music("6.mp3");
+	setGame(game);}
+};
+
+var pause=function(){
+
+fillAll(); 
+//grid.draw(); 
+
+ball.draw();
+
+player.draw(); 
+ if (mbLoaded) {   
+ctx.drawImage(mb, 590,5);}
+if(backgroundAudio.volume==0){
+   if (mupLoaded) {   
+ctx.drawImage(mup, 590,50);}}
+else {if (muLoaded) {   
+ctx.drawImage(mu, 590,50);}}
+
+ ctx.fillStyle = "white";
+    ctx.strokeStyle = "#F00";
+    ctx.font = "small-caps 30px Dry Brush";
+    ctx.fillText("Score:", 20, 50);
+	ctx.fillText(player.score, 130, 50);
+	ctx.fillText("Hp:", 20, 80);
+	ctx.fillText(player.hp, 130, 80);
+ ctx.fillStyle = "#32CD32";
+    ctx.fillText("PRESS ANY KEY TO START", 150, 270);
+	
+	if (isAnyKeyDown()){
+	setGame(game);}
+};
+
+openNav1();
+
+function getMousePos(canvas, event) {
+    var rect = canvas.getBoundingClientRect();
+    return {
+        x: event.clientX - rect.left,
+        y: event.clientY - rect.top
+    };
+}
+//Function to check whether a point is inside a rectangle
+function isInside(pos, rect){
+    return pos.x > rect.x && pos.x < rect.x+rect.width && pos.y < rect.y+rect.height && pos.y > rect.y
+}
+
+//The rectangle should have x,y,width,height properties
+var rect = {
+    x:650,
+    y:80,
+    width:50,
+    height:50
+};
+var rect1 = {
+    x:650,
+    y:140,
+    width:50,
+    height:50
+};
+function mena() {
+  
+  var mena = new Audio(); 
+ 
+  mena.src = 'menu.mp3';
+
+  mena.autoplay = true; 
+
+  mena.volume = 1;
+}
+//Binding the click event on the canvas
+canvas.addEventListener('click', function(evt) {
+    var mousePos = getMousePos(canvas, evt);
+
+    if (isInside(mousePos,rect)) {
+	 
+       setGame(pause);
+	  backgroundAudio.pause();
+	  mena();
+	   openNav();
+    }  
+	
+	if (isInside(mousePos,rect1)) {
+	if(backgroundAudio.volume==0){
+	 backgroundAudio.volume=0.25;}
+	 else
+	  backgroundAudio.volume=0;
+	
+    }  
+}, false);
+function readCookie(name)
+{
+  var cookieValue = "";
+  var search = name + "=";
+  if(document.cookie.length > 0)
+  { 
+    offset = document.cookie.indexOf(search);
+    if (offset != -1)
+    { 
+      offset += search.length;
+      end = document.cookie.indexOf(";", offset);
+      if (end == -1) end = document.cookie.length;
+      cookieValue = unescape(document.cookie.substring(offset, end))
+    }
+  }
+  else{return null;}
+  return cookieValue;
+}
+var name = [[]];
+var px;
+var bx,by;
+var n;
+function writeCookie(bm,b,g,y, value, hours)
+{
+
+name=bm;
+n=name.join('');
+px=b;
+bx=g;
+by=y;
+  var expire = "";
+  if(hours != null)
+  {
+    expire = new Date((new Date()).getTime() + hours * 3600000);
+    expire = "; expires=" + expire.toGMTString();
+  }
+  document.cookie =px+"="+bx+"="+by+"="+n+"="+ escape(value) + expire;
+}
+
+</script> 
+
+</body> 
+</html>
