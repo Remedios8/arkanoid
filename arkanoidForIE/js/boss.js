@@ -22,7 +22,7 @@ var timePassed = Date.now() - start;
     return;
   }
   
-drawImage('image.gif',i,1,a,b);
+drawImage('img/image.gif',i,1,a,b);
 timePassed1 = Date.now() - start1;
 if(timePassed1>=500){
  start1 = Date.now();

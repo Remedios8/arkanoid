@@ -6,8 +6,9 @@
 
 <!-- Фон страницы -->
  <style>
+@import url('https://fonts.googleapis.com/css?family=Permanent+Marker');
 body {
-background:url(aa.jpg) repeat;
+background:url(img/aa.jpg) repeat;
  background-size: repeat;
 }
  </style>
@@ -51,7 +52,7 @@ background:url(aa.jpg) repeat;
   <div class="overlay-content">
     <a href="#"onclick="mena();setInterval(location.reload(), 50000); ">Back to menu</a>
 	{ YOU LOSE! }
-	<br><img src="lose.gif" >
+	<br><img src="img/lose.gif" >
 	
   </div>
 </div>
@@ -59,7 +60,7 @@ background:url(aa.jpg) repeat;
   <div class="overlay-content">
     <a href="#"onclick="mena();setInterval(location.reload(), 50000); ">Back to menu</a>
 	{ YOU WIN! }
-	<br><img src="win.gif" >
+	<br><img src="img/win.gif" >
 	
   </div>
 </div>
@@ -115,8 +116,9 @@ canvas {
     top: 25%; /* 25% from the top */
     width: 100%; /* 100% width */
     text-align: center; /* Centered text/links */
-	 font: 20pt Beauty and the Beast;  
-    margin-top: 30px; /* 30px top margin to avoid conflict with the close button on smaller screens */
+	font-family:'Permanent Marker', cursive; 
+    margin-top: 40px; /* 30px top margin to avoid conflict with the close button on smaller screens */
+    font-size:25px;
 }
 
 /* The navigation links inside the overlay */
@@ -144,7 +146,7 @@ canvas {
 
 /* When the height of the screen is less than 450 pixels, change the font-size of the links and position the close button again, so they don't overlap */
 @media screen and (max-height: 450px) {
-    .overlay a {font-size: 20px}
+    .overlay a {font-size: 30px}
     .overlay .closebtn {
         font-size: 40px;
         top: 15px;
@@ -155,13 +157,13 @@ canvas {
 
 
 
-<script type="text/javascript" src="key.js"></script>
-<script type="text/javascript" src="engine.js"></script>
-<script src="graph.js"></script>
-<script type="text/javascript" src="grid.js"></script>
-<script src="ball.js"></script>
-<script src="player.js"></script>
-<script src="witch.js"></script>
+<script type="text/javascript" src="js/key.js"></script>
+<script type="text/javascript" src="js/engine.js"></script>
+<script src="js/graph.js"></script>
+<script type="text/javascript" src="js/grid.js"></script>
+<script src="js/ball.js"></script>
+<script src="js/player.js"></script>
+<script src="js/witch.js"></script>
 
 <div id="canvas-container">
 <canvas id="canvas" style="z-index:1"width="640" height="480"></canvas>
@@ -179,7 +181,7 @@ canvas {
 
 <script type="text/javascript">
 
-music("5.mp3");
+music("img/5.mp3");
 backgroundAudio.play();
 
 /* Open when someone clicks on the span element */
@@ -276,14 +278,14 @@ grid.create(map);
 player.init(width/2,82,'red');
 ball.init(player.x+Math.ceil(player.width/3),player.y-20,13,'red');
 witch.initball(100,100,10,'mad.gif');
-img.src = 'cats.gif';
-img1.src = 'cat.gif';
-img2.src = 'blood.png';
-witch1.src = 'witch.gif';
-puppy.src = 'pup.gif';
-ddeath.src='ddeath.gif';
-daddy.src='daddy.gif';
-fon.src='fff.jpg';
+img.src = 'img/cats.gif';
+img1.src = 'img/cat.gif';
+img2.src = 'img/blood.png';
+witch1.src = 'img/witch.gif';
+puppy.src = 'img/pup.gif';
+ddeath.src='img/ddeath.gif';
+daddy.src='img/daddy.gif';
+fon.src='img/fff.jpg';
 
 
 var timePassedw0=6000;
@@ -293,19 +295,19 @@ var mbLoaded = false;
 mb.onload = function(){
  mbLoaded = true;
 }
-mb.src='mbut.gif'; 
+mb.src='img/mbut.gif'; 
 mu     = new Image();  
 var muLoaded = false;
 mu.onload = function(){
  muLoaded = true;
 }
-mu.src='mus.gif'; 
+mu.src='img/mus.gif'; 
 mup     = new Image();
 var mupLoaded = false;
 mup.onload = function(){
  mupLoaded = true;
 }
-mup.src='mup.gif'; 
+mup.src='img/mup.gif'; 
 
 var game = function(){ 
 
@@ -367,7 +369,7 @@ ctx.drawImage(mu, 590,50);}}
 	ctx.fillText(Math.ceil(((ball.speedx+ball.speedy)/2* 100))/100, 220, 110);
 	
 if(ball.x>=800){
-ctx.font = "small-caps 20pt Beauty and the Beast";
+ctx.font = "small-caps 30pt Permanent Marker";
     ctx.fillText("}", 155, 80);}
 	
 }; 
@@ -401,7 +403,7 @@ ctx.drawImage(mu, 590,50);}}
 	
 	if (isAnyKeyDown()){
 	backgroundAudio.pause();
-	music("6.mp3");
+	music("img/6.mp3");
 	setGame(game);}
 };
 
@@ -466,7 +468,7 @@ function mena() {
   
   var mena = new Audio(); 
  
-  mena.src = 'menu.mp3';
+  mena.src = 'img/menu.mp3';
 
   mena.autoplay = true; 
 

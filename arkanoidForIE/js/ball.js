@@ -64,7 +64,7 @@ ctx.drawImage(pic, a-5,b-5);}
 
 if (this.dy==-1&&this.dx==-1) {
 	pic       = new Image();              // "Создаём" изображение
-    pic.src    = 'p2.gif';  // Источник изображения, позаимствовано на хабре
+    pic.src    = 'img/p2.gif';  // Источник изображения, позаимствовано на хабре
      pic.onload = function() {    // Событие onLoad, ждём момента пока загрузится изображение
 ctx.drawImage(pic, a-5,b-5);}
 	
@@ -73,7 +73,7 @@ ctx.drawImage(pic, a-5,b-5);}
 
 else{
 	pic       = new Image();              // "Создаём" изображение
-    pic.src    = 'upu.gif';  // Источник изображения, позаимствовано на хабре
+    pic.src    = 'img/upu.gif';  // Источник изображения, позаимствовано на хабре
      pic.onload = function() {    // Событие onLoad, ждём момента пока загрузится изображение
 ctx.drawImage(pic, a-5,b-5);}
 }
@@ -286,7 +286,7 @@ ball.init(1000,10,5,'red');
 function Dog() {
   var audio4 = new Audio();
 
-  audio4.src = 'fall.mp3'; 
+  audio4.src = 'img/fall.mp3'; 
  
   audio4.autoplay = true;
   audio4.volume = 0.1;
@@ -296,7 +296,7 @@ function Witch() {
   
   var audiow = new Audio(); 
  
-  audiow.src = 'witch.mp3';
+  audiow.src = 'img/witch.mp3';
 
   audiow.autoplay = true; 
 
@@ -306,7 +306,7 @@ function wiwi() {
   
   var audiowi = new Audio(); 
  
-  audiowi.src = 'wiwi.mp3';
+  audiowi.src = 'img/wiwi.mp3';
 
   audiowi.autoplay = true; 
 

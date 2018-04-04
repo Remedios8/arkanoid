@@ -147,7 +147,7 @@ function getRandomInt(min, max) {
 function ballf() {
   var audiof = new Audio();
 
-  audiof.src = 'bomb.mp3'; 
+  audiof.src = 'img/bomb.mp3'; 
  
   audiof.autoplay = true;
   audiof.volume = 0.05;
@@ -157,7 +157,7 @@ function Witch() {
   
   var audiow = new Audio(); 
  
-  audiow.src = 'witch.mp3';
+  audiow.src = 'img/witch.mp3';
 
   audiow.autoplay = true; 
 

@@ -133,7 +133,7 @@ function win() {
   
   var win = new Audio(); 
  
-  win.src = 'win.mp3';
+  win.src = 'img/win.mp3';
 
  win.autoplay = true; 
 
@@ -144,7 +144,7 @@ function win() {
 function soundDog() {
   var audio = new Audio();
 
-  audio.src = 'death.mp3'; 
+  audio.src = 'img/death.mp3'; 
  
   audio.autoplay = true; 
   audio.volume = .1;
@@ -155,7 +155,7 @@ function soundDeath() {
   
   var audio1 = new Audio(); 
  
-  audio1.src = 'cat.mp3';
+  audio1.src = 'img/cat.mp3';
   
   audio1.autoplay = true; 
   audio1.volume = .1;
